@@ -12,7 +12,24 @@ export async function getPicture(): Promise<pictureInterface[]> {
 
   if (error) {
     throw new Error(
-      `Erreur lors de la récupération des photos : ${error.message}`
+      `Erreur lors de la récupération des événements : ${error.message}`
+    );
+  }
+  return data || [];
+}
+
+// Lire les photos par event_id
+export async function getPicturesByEventId(eventId: number): Promise<pictureInterface[]> {
+  const { data, error } = await supabase
+    .from("photo") // Adjust "photo" to your actual table name
+    .select("*")
+    .eq("event_id", eventId)
+    .returns<pictureInterface[]>()
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    throw new Error(
+      `Erreur lors de la récupération des photos pour l'événement ${eventId} : ${error.message}`
     );
   }
   return data || [];
