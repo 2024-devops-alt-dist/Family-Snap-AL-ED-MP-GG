@@ -2,18 +2,36 @@ import { useEffect, useState } from "react";
 
 import { getEvents, createEvent, deleteEvent } from "./services/eventService";
 import { Event } from "./entity/Event";
+import { pictureInterface } from "./entity/PictureInterface";
+import { getPicture } from "./services/pictureService";
 
 function App() {
   const [events, setEvents] = useState<Event[]>([]);
+  const [pictures, setPictures] = useState<pictureInterface[]>([]);
 
   useEffect(() => {
     refreshEvents();
+    refreshPictures();
   }, []);
 
   async function refreshEvents() {
     try {
       const data = await getEvents();
       setEvents(data);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("Erreur :", error.message);
+      } else {
+        console.error("Erreur inconnue :", error);
+      }
+    }
+  }
+
+  async function refreshPictures() {
+    try {
+      const data = await getPicture();
+      setPictures(data);
+      console.log(data);
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.error("Erreur :", error.message);
@@ -104,6 +122,16 @@ function App() {
               </button>
             </li>
           ))}
+        </ul>
+
+        <ul>
+          {pictures.map((picture: pictureInterface) => {
+            return (
+              <li key={picture.url}>
+                <img src={picture.url} alt="" />
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>
