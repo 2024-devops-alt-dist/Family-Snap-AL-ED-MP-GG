@@ -1,10 +1,10 @@
-import { Event } from "../entity/eventInterface";
+import { eventInterface } from "../entity/eventInterface";
 import { supabase } from "../supabaseConfig";
 import QRCode from 'qrcode';
 
 
 // Get Event
-export async function getEvents(): Promise<Event[]> {
+export async function getEvents(): Promise<eventInterface[]> {
   const { data, error } = await supabase
     .from("event")
     .select("id, created_at, title, url, description, qr_code")
@@ -19,7 +19,7 @@ export async function getEvents(): Promise<Event[]> {
 }
 
 // Create Event
-export async function createEvent(event: Omit<Event, "id">): Promise<Event> {
+export async function createEvent(event: Omit<eventInterface, "id">): Promise<Event> {
   try {
     // Générer l'URL du QR Code
     const qrCodeUrl = await QRCode.toDataURL(JSON.stringify(event));
@@ -41,7 +41,7 @@ export async function createEvent(event: Omit<Event, "id">): Promise<Event> {
 }
 
 // Update Event
-export async function updateEvent(eventId: number, updates: Partial<Event>): Promise<Event> {
+export async function updateEvent(eventId: number, updates: Partial<Event>): Promise<eventInterface> {
   const { data, error } = await supabase
     .from("event")
     .update(updates)

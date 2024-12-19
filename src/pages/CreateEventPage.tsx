@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { createEvent } from "../services/eventService";
-import { Event } from "../entity/eventInterface";
+import { eventInterface } from "../entity/eventInterface";
 import { useNavigate } from "react-router-dom";
 
 const CreateEventPage: React.FC = () => {
@@ -13,7 +13,7 @@ const CreateEventPage: React.FC = () => {
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
 
-        const newEvent: Omit<Event, "id"> = {
+        const newEvent: Omit<eventInterface, "id"> = {
             title,
             description,
             url,
