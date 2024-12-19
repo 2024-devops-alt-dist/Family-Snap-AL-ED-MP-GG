@@ -4,4 +4,5 @@ export interface Event {
      title: string;
      url: string;
      description: string;
+     qr_code: string;
 }

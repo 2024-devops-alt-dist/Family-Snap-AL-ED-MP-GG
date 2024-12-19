@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { createEvent } from "../services/eventService";
-import { Event } from "../entity/Event";
+import { Event } from "../entity/eventInterface";
 import { useNavigate } from "react-router-dom";
 
 const CreateEventPage: React.FC = () => {
@@ -18,6 +18,7 @@ const CreateEventPage: React.FC = () => {
             description,
             url,
             created_at: new Date(createdAt),
+            qr_code: "", 
         };
 
         try {
