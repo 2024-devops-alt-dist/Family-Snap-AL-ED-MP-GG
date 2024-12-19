@@ -10,6 +10,7 @@ const CreateEventPage: React.FC = () => {
     const [createdAt, setCreatedAt] = useState<string>("");
     const navigate = useNavigate();
 
+
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
 
