@@ -1,10 +1,10 @@
 import { Event } from "../entity/Event";
 import { supabase } from "../supabaseConfig";
 
-// Lire les événements
+// Get Event
 export async function getEvents(): Promise<Event[]> {
     const { data, error } = await supabase
-    .from("events")
+    .from("event")
     .select("id, created_at, title, url, description")
     .order("created_at", { ascending: false });
     
@@ -14,9 +14,9 @@ export async function getEvents(): Promise<Event[]> {
     return data || [];
 }
 
-// Créer un événement
+// Create Event
 export async function createEvent(event: Omit<Event, "id">): Promise<Event> {
-    const { data, error } = await supabase.from("events").insert([event]).select().single();
+    const { data, error } = await supabase.from("event").insert([event]).select().single();
     
     if (error) {
         throw new Error(`Erreur lors de la création de l'événement : ${error.message}`);
@@ -24,10 +24,10 @@ export async function createEvent(event: Omit<Event, "id">): Promise<Event> {
     return data;
 }
 
-// Mettre à jour un événement
+// Update event
 export async function updateEvent(eventId: number, updates: Partial<Event>): Promise<Event> {
     const { data, error } = await supabase
-    .from("events")
+    .from("event")
     .update(updates)
     .eq("id", eventId)
     .select("id, created_at, title, url, description")
@@ -39,9 +39,9 @@ export async function updateEvent(eventId: number, updates: Partial<Event>): Pro
     return data;
 }
 
-// delete
+// delete Event
 export async function deleteEvent(eventId: number): Promise<void> {
-    const { error } = await supabase.from("events").delete().eq("id", eventId);
+    const { error } = await supabase.from("event").delete().eq("id", eventId);
     if (error) {
         throw new Error(`Erreur lors de la suppression de l'événement : ${error.message}`);
     }

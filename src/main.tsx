@@ -1,11 +1,23 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 import "./App.css";
-import App from "./App.tsx";
+
+import App from "./App";
+import EventListPage from "./pages/EventListPage";
+import CreateEventPage from "./pages/CreateEventPage";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <App />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />}>
+          <Route index element={<EventListPage />} />
+
+          <Route path="create" element={<CreateEventPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   </StrictMode>
 );
