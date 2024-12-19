@@ -1,8 +1,8 @@
 // import { Event } from "../entity/Event";
-import { pictureInterface } from "../entity/PictureInterface";
+import { pictureInterface } from "../entity/pictureInterface";
 import { supabase } from "../supabaseConfig";
 
-// Lire les événements
+// Lire les photos
 export async function getPicture(): Promise<pictureInterface[]> {
   const { data, error } = await supabase
     .from("photo")
@@ -12,57 +12,57 @@ export async function getPicture(): Promise<pictureInterface[]> {
 
   if (error) {
     throw new Error(
-      `Erreur lors de la récupération des événements : ${error.message}`
+      `Erreur lors de la récupération des photos : ${error.message}`
     );
   }
   return data || [];
 }
 
-// Créer un événement
-export async function createEvent(
-  event: Omit<Event, "id">
+// Créer une photo
+export async function createPicture(
+  picture: Omit<pictureInterface, "id">
 ): Promise<pictureInterface> {
   const { data, error } = await supabase
-    .from("events")
-    .insert([event])
+    .from("photo")
+    .insert([picture])
     .select()
     .single();
 
   if (error) {
     throw new Error(
-      `Erreur lors de la création de l'événement : ${error.message}`
+      `Erreur lors de la création de le photo : ${error.message}`
     );
   }
   return data;
 }
 
-// Mettre à jour un événement
-export async function updateEvent(
-  eventId: number,
-  updates: Partial<Event>
+// Mettre à jour une photo
+export async function updatePicture(
+  pictureId: number,
+  updates: Partial<pictureInterface>
 ): Promise<pictureInterface> {
   const { data, error } = await supabase
-    .from("events")
+    .from("photo")
     .update(updates)
-    .eq("id", eventId)
+    .eq("id", pictureId)
     .select()
     .returns<pictureInterface>()
     .single();
 
   if (error) {
     throw new Error(
-      `Erreur lors de la mise à jour de l'événement : ${error.message}`
+      `Erreur lors de la mise à jour de le photo : ${error.message}`
     );
   }
   return data;
 }
 
-// delete
-export async function deleteEvent(eventId: number): Promise<void> {
-  const { error } = await supabase.from("events").delete().eq("id", eventId);
+// delete une photo
+export async function deletePicture(pictureId: number): Promise<void> {
+  const { error } = await supabase.from("photo").delete().eq("id", pictureId);
   if (error) {
     throw new Error(
-      `Erreur lors de la suppression de l'événement : ${error.message}`
+      `Erreur lors de la suppression de le photo : ${error.message}`
     );
   }
 }
