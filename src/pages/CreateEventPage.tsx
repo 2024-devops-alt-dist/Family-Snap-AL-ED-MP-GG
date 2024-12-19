@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { createEvent } from "../services/eventService";
-import { Event } from "../entity/Event";
+import { eventInterface } from "../entity/eventInterface";
 import { useNavigate } from "react-router-dom";
 import CameraComponent from "../components/CameraComponent";
 
@@ -11,15 +11,17 @@ const CreateEventPage: React.FC = () => {
   const [createdAt, setCreatedAt] = useState<string>("");
   const navigate = useNavigate();
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
 
-    const newEvent: Omit<Event, "id"> = {
-      title,
-      description,
-      url,
-      created_at: new Date(createdAt),
-    };
+    async function handleSubmit(e: React.FormEvent) {
+        e.preventDefault();
+
+        const newEvent: Omit<eventInterface, "id"> = {
+            title,
+            description,
+            url,
+            created_at: new Date(createdAt),
+            qr_code: "", 
+        };
 
     try {
       await createEvent(newEvent);

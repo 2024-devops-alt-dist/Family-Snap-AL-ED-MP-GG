@@ -7,6 +7,7 @@ import "./App.css";
 import App from "./App";
 import EventListPage from "./pages/EventListPage";
 import CreateEventPage from "./pages/CreateEventPage";
+import LoginPage from "./pages/LoginPage";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -14,7 +15,7 @@ createRoot(document.getElementById("root")!).render(
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<EventListPage />} />
-
+          <Route path="login" element={<LoginPage />} />
           <Route path="create" element={<CreateEventPage />} />
         </Route>
       </Routes>

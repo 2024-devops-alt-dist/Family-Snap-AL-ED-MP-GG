@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { createEvent } from "../../services/eventService";
-import { Event } from "../../entity/Event";
+import { Event } from "../../entity/eventInterface";
 
 interface CreateEventProps {
     onEventCreated: () => void;
@@ -19,6 +19,7 @@ const CreateEvent: React.FC<CreateEventProps> = ({ onEventCreated }) => {
             description,
             url,
             created_at: new Date(),
+            qr_code: "",
         };
         
         try {

@@ -3,10 +3,11 @@ import { Outlet } from "react-router-dom";
 function App() {
   return (
     <div 
-      className="min-h-screen bg-cover bg-center" 
-      style={{ backgroundImage: "url('./public/images/noel.jpg')", backgroundAttachment: "fixed" }}
+      className="min-h-screen bg-cover bg-center bg-fixed" 
+      style={{ backgroundImage: "url('/images/noel.jpg')" }}
     >
-      <div className="max-w-4xl mx-auto  rounded-lg shadow-md p-6 ">
+
+      <div className="bg-black bg-opacity-60 min-h-screen flex items-center justify-center">
         <Outlet />
       </div>
     </div>

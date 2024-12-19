@@ -1,5 +1,5 @@
 import React from "react";
-import { Event } from "../../entity/Event";
+import { Event } from "../../entity/eventInterface";
 interface EventListProps {
     events: Event[];
     onDelete: (eventId: number) => void;
