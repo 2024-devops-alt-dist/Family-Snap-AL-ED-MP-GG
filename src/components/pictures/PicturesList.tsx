@@ -3,16 +3,23 @@ import { getPicture } from "../../services/pictureService";
 import { Picture } from "./picture";
 import { pictureInterface } from "../../entity/pictureInterface";
 
-export function PictureListe() {
+interface pictureListeProps {
+  eventId: number;
+}
+
+export function PictureListe({ eventId }: pictureListeProps) {
   const [pictures, setPictures] = useState<pictureInterface[]>([]);
 
   useEffect(() => {
-    refreshPictures();
-  }, []);
+    if (eventId) {
+      refreshPictures();
+      console.log(eventId);
+    }
+  }, [eventId]);
 
   async function refreshPictures() {
     try {
-      const data = await getPicture();
+      const data = await getPicture(eventId);
       setPictures(data);
       console.log(data);
     } catch (error: unknown) {

@@ -27,13 +27,13 @@ const CameraComponent = () => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col">
       <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" />
       <button
-        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+        className="border mt-2 text-blue px-4 py-2 rounded hover:bg-blue-600 transition"
         onClick={captureImage}
       >
-        Prendre une photo
+        Capture
       </button>
       {images &&
         images.map((image) => {

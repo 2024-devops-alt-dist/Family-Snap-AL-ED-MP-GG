@@ -3,12 +3,14 @@ import { pictureInterface } from "../entity/pictureInterface";
 import { supabase } from "../supabaseConfig";
 
 // Lire les photos
-export async function getPicture(): Promise<pictureInterface[]> {
+export async function getPicture(eventId: number): Promise<pictureInterface[]> {
   const { data, error } = await supabase
     .from("photo")
     .select()
+    .eq("event_id", eventId)
     .returns<pictureInterface[]>()
     .order("created_at", { ascending: false });
+  console.log(eventId);
 
   if (error) {
     throw new Error(
@@ -19,7 +21,9 @@ export async function getPicture(): Promise<pictureInterface[]> {
 }
 
 // Lire les photos par event_id
-export async function getPicturesByEventId(eventId: number): Promise<pictureInterface[]> {
+export async function getPicturesByEventId(
+  eventId: number
+): Promise<pictureInterface[]> {
   const { data, error } = await supabase
     .from("photo") // Adjust "photo" to your actual table name
     .select("*")
