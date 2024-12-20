@@ -37,13 +37,19 @@ export async function getPicturesByEventId(eventId: number): Promise<pictureInte
 
 // Créer une photo
 export async function createPicture(
-  picture: Omit<pictureInterface, "id">
+  fileName: string
 ): Promise<pictureInterface> {
+  const newEvent: pictureInterface = {
+    url: fileName,
+    event_id: 14,
+    created_at: new Date(),
+  };
   const { data, error } = await supabase
     .from("photo")
-    .insert([picture])
+    .insert([newEvent])
     .select()
     .single();
+  console.log(data, newEvent);
 
   if (error) {
     throw new Error(

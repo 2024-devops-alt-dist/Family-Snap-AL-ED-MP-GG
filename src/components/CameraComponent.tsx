@@ -1,14 +1,28 @@
 import  { useRef, useState } from "react";
 import Webcam from "react-webcam";
+import { createPicture } from "../services/pictureService";
 
 const CameraComponent = () => {
   const webcamRef = useRef<Webcam>(null);
   const [image, setImage] = useState<string | null>(null);
 
-  const captureImage = () => {
+  const captureImage = async () => {
     if (webcamRef.current) {
       const screenshot = webcamRef.current.getScreenshot();
-      setImage(screenshot);
+      if (screenshot) {
+        setImage(screenshot); // Affiche l'image capturée à l'utilisateur
+        try {
+          // Générer un chemin fictif ou un nom de fichier
+          const filePath = `photos/image-${Date.now()}.jpg`;
+
+          // Enregistrer ce chemin dans la base de données
+          await createPicture(filePath);
+
+          console.log("Chemin sauvegardé :", filePath);
+        } catch (error) {
+          console.error("Erreur lors de la sauvegarde :", error);
+        }
+      }
     }
   };
 
