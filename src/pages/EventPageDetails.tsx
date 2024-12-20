@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { getPicturesByEventId } from "../services/pictureService";
+import { createPicture, getPicturesByEventId } from "../services/pictureService";
 import { getEventById } from "../services/eventService";
 import { pictureInterface } from "../entity/pictureInterface";
 import { Event } from "../entity/eventInterface";
+import { supabase } from '../supabaseConfig';
 import CameraComponent from "../components/CameraComponent";
 import { PictureListe } from "../components/pictures/PicturesList";
 
@@ -12,6 +13,9 @@ const EventPageDetails: React.FC = () => {
   const [pictures, setPictures] = useState<pictureInterface[]>([]);
   const [eventDetails, setEventDetails] = useState<Event | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+    const [file, setFile] = useState<File | null>(null);
+    const [uploading, setUploading] = useState(false);
+    const [imageUrl] = useState(null);
   const [isCamera, setIsCamera] = useState<boolean>(false);
   console.log(eventId);
 
@@ -35,6 +39,35 @@ const EventPageDetails: React.FC = () => {
 
     fetchEventDetails();
   }, [eventId]);
+
+
+    const handleFileChange = (e: any) => {
+        setFile(e.target.files[0]);
+      };
+  
+    const uploadImage = async () => {
+        if (!file) return;
+        
+
+        setUploading(true);
+        const fileExt = file.name.split('.').pop();
+        const fileName = `${Date.now()}.${fileExt}`;
+        const filePath = `${fileName}`;
+    
+        const { data, error } = await supabase.storage.from('images').upload(filePath, file);
+        
+        await createPicture(data ? data.path:"", parseInt(eventId ? eventId:""));
+
+        if (error) throw error;
+        
+
+        if (error) {
+            console.log('error');
+            
+        } else {
+            console.log('ok')
+        }
+    };
 
   function handleviewCam() {
     setIsCamera(!isCamera);
@@ -70,6 +103,20 @@ const EventPageDetails: React.FC = () => {
             {!isCamera ? "Prendre une photo" : "Fermer"}
           </button>
           {isCamera && <CameraComponent />}
+
+            <div>
+                <input type="file" onChange={handleFileChange} />
+                <button onClick={uploadImage} disabled={uploading}>
+                    {uploading ? 'Uploading...' : 'Upload'}
+                </button>
+
+                {imageUrl && (
+                    <div>
+                    <p>Image téléchargée avec succès!</p>
+                    <img src={imageUrl} alt="Uploaded" style={{ width: '200px' }} />
+                    </div>
+                )}
+            </div>
 
           <h3 className="text-xl font-bold text-green-700 mt-8">📸 Photos :</h3>
           {pictures.length > 0 ? (
