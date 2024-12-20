@@ -49,8 +49,10 @@ const CreateEventPage: React.FC = () => {
         <div className="relative max-w-lg mx-auto mt-16 p-8 bg-red-100 shadow-xl rounded-2xl transform transition duration-300 hover:scale-105">
         
         {successMessage && (
-            <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg animate-fade-in-out">
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50">
+            <div className="bg-green-600 text-white px-8 py-6 rounded-lg shadow-xl animate-fade-in-out">
             {successMessage}
+            </div>
             </div>
         )}
         
