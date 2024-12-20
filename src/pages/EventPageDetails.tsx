@@ -91,7 +91,7 @@ const EventPageDetails: React.FC = () => {
       {/* Retour à la liste des événements */}
       <div className="mt-8 text-center">
         <Link
-          to="/"
+          to="/events"
           className="inline-block bg-green-500 text-white px-8 py-4 rounded-full text-lg font-bold hover:bg-green-600 transition transform hover:scale-110 shadow-lg"
         >
           ⬅️ Retour à la liste des événements
