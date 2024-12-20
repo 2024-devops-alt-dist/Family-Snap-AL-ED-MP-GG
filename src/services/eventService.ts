@@ -47,12 +47,10 @@ export async function createEvent(event: Omit<Event, "id">): Promise<Event> {
     }
     
     
-    const baseUrl = process.env.REACT_APP_BASE_URL || window.location.origin;
-    
-    // Générez l'URL du QR code
+    // Générez l'URL du QR Code vers la page de détails
+    const baseUrl = process.env.REACT_APP_BASE_URL || 'https://family-snap-al-ed-mp-gg.netlify.app';
     const eventDetailUrl = `${baseUrl}/details/${createdEvent.id}`;
     const qrCodeUrl = await QRCode.toDataURL(eventDetailUrl);
-    
     
     // Met à jour l'événement avec l'URL des détails de l'événement pour le QR Code
     const { data: updatedEvent, error: updateError } = await supabase
@@ -61,6 +59,7 @@ export async function createEvent(event: Omit<Event, "id">): Promise<Event> {
     .eq("id", createdEvent.id)
     .select()
     .single();
+    
     
     if (updateError || !updatedEvent) {
       throw new Error(`Erreur lors de la mise à jour du QR Code : ${updateError?.message}`);
