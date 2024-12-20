@@ -1,16 +1,16 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Webcam from "react-webcam";
 import { createPicture } from "../services/pictureService";
 
 const CameraComponent = () => {
   const webcamRef = useRef<Webcam>(null);
-  const [image, setImage] = useState<string | null>(null);
+  const [images, setImages] = useState<string[]>([]);
 
   const captureImage = async () => {
     if (webcamRef.current) {
       const screenshot = webcamRef.current.getScreenshot();
       if (screenshot) {
-        setImage(screenshot); // Affiche l'image capturée à l'utilisateur
+        setImages((prevPicture) => [...prevPicture, screenshot]); // Affiche l'image capturée à l'utilisateur
         try {
           // Générer un chemin fictif ou un nom de fichier
           const filePath = `photos/image-${Date.now()}.jpg`;
@@ -35,7 +35,10 @@ const CameraComponent = () => {
       >
         Prendre une photo
       </button>
-      {image && <img src={image} alt="Captured" />}
+      {images &&
+        images.map((image) => {
+          return <img src={image} alt={image} />;
+        })}
     </div>
   );
 };
