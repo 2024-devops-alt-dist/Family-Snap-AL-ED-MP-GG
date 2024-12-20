@@ -46,28 +46,32 @@ const EventPageDetails: React.FC = () => {
     };
     
     const uploadImage = async () => {
-        if (!file) return;
-        
-        
+        if (!file || !eventId) return;
+    
         setUploading(true);
         const fileExt = file.name.split('.').pop();
         const fileName = `${Date.now()}.${fileExt}`;
         const filePath = `${fileName}`;
-        
-        const { data, error } = await supabase.storage.from('images').upload(filePath, file);
-        
-        await createPicture(data ? data.path:"", parseInt(eventId ? eventId:""));
-        
-        if (error) throw error;
-        
-        
-        if (error) {
-            console.log('error');
-            
-        } else {
-            console.log('ok')
+    
+        try {
+            const { data, error } = await supabase.storage.from('images').upload(filePath, file);
+            if (error) throw error;
+    
+            await createPicture(data ? data.path : "", parseInt(eventId));
+    
+            // Mettre à jour les images après l'ajout
+            const updatedPictures = await getPicturesByEventId(parseInt(eventId));
+            setPictures(updatedPictures);
+    
+            setFile(null); // Réinitialise le fichier
+            console.log('Image téléchargée et galerie mise à jour.');
+        } catch (error) {
+            console.error('Erreur lors du téléchargement de l\'image :', error);
+        } finally {
+            setUploading(false);
         }
     };
+    
     
     function handleviewCam() {
         setIsCamera(!isCamera);
@@ -145,11 +149,9 @@ const EventPageDetails: React.FC = () => {
             
             <h3 className="text-xl font-bold text-green-700 mt-8">📸 Photos :</h3>
             {pictures.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 <PictureListe eventId={parseInt(eventId ? eventId : "")} />
-                </div>
             ) : (
-                <p className="text-center text-gray-500">
+                <p className="text-center text-gray-500 text-lg font-semibold mt-6">
                 Il n'y a pas d'images dans cet évènement
                 </p>
             )}

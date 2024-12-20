@@ -31,14 +31,17 @@ export function PictureListe({ eventId }: pictureListeProps) {
     }
   }
   return (
-    <ul>
-      {pictures.map((picture: pictureInterface) => {
-        return (
-          <li key={picture.url}>
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+      {pictures.map((picture: pictureInterface) => (
+        <div
+          key={picture.url}
+          className="w-full h-48 rounded-lg shadow-md overflow-hidden"
+        >
+          <div className="w-full h-full">
             <Picture picture={picture} />
-          </li>
-        );
-      })}
-    </ul>
+          </div>
+        </div>
+      ))}
+    </div>
   );
 }
