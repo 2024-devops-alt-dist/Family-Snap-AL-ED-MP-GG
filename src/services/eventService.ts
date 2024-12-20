@@ -48,7 +48,7 @@ export async function createEvent(event: Omit<Event, "id">): Promise<Event> {
     
     
     // Générez l'URL du QR Code vers la page de détails
-    const baseUrl = process.env.REACT_APP_BASE_URL || 'https://family-snap-al-ed-mp-gg.netlify.app';
+    const baseUrl = process.env.REACT_APP_BASE_URL|| 'https://family-snap-al-ed-mp-gg.netlify.app' ;
     const eventDetailUrl = `${baseUrl}/details/${createdEvent.id}`;
     const qrCodeUrl = await QRCode.toDataURL(eventDetailUrl);
     
