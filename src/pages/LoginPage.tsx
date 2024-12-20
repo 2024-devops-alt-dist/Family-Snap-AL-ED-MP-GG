@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { getUsers } from "../services/userService";
-import  { useNavigate } from 'react-router-dom'
-
-
-const users = await getUsers();
+import { useNavigate } from 'react-router-dom';
+import { userInterface } from "../entity/userInterface";
 
 const LoginPage: React.FC = () => {
   const [name, setName] = useState("");
@@ -11,25 +9,33 @@ const LoginPage: React.FC = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate(); 
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    for (let i = 0; i < users.length; i++) {
-      const user = users[i];
-      if (name === user.name && password === user.password) {
-        const token = "123";
+
+    try {
+      const users: userInterface[] = await getUsers();
+
+      const user = users.find(user => user.name === name && user.password === password);
+
+      if (user) {
+        const token = "123"; // Simule un jeton
         localStorage.setItem('token', token);
-        navigate('/');
+        navigate('/'); 
+      } else {
+        setError('Identifiants incorrects');
       }
-        
+    } catch (err) {
+      console.error("Erreur lors de la connexion :", err);
+      setError('Erreur du serveur. Veuillez réessayer.');
     }
-    setError('Identifiants incorrects');
-    // TODO: Handle form submission
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-8">
       <div className="relative group">
-        <label htmlFor="name" className="absolute left-3 top-2 text-green-800 text-sm transform -translate-y-2 scale-90 transition-all group-focus-within:scale-75 group-focus-within:-translate-y-4">Nom d'utilisateur:</label>
+        <label htmlFor="name" className="absolute left-3 top-2 text-green-800 text-sm transform -translate-y-2 scale-90 transition-all group-focus-within:scale-75 group-focus-within:-translate-y-4">
+          Nom d'utilisateur:
+        </label>
         <input
           type="text"
           id="name"
@@ -38,8 +44,11 @@ const LoginPage: React.FC = () => {
           className="w-full border border-green-500 rounded-lg p-4 text-green-900 bg-green-50 focus:outline-none focus:ring-4 focus:ring-green-400 focus:border-green-500"
         />
       </div>
+
       <div className="relative group">
-        <label htmlFor="password" className="absolute left-3 top-2 text-green-800 text-sm transform -translate-y-2 scale-90 transition-all group-focus-within:scale-75 group-focus-within:-translate-y-4">Mot de passe:</label>
+        <label htmlFor="password" className="absolute left-3 top-2 text-green-800 text-sm transform -translate-y-2 scale-90 transition-all group-focus-within:scale-75 group-focus-within:-translate-y-4">
+          Mot de passe:
+        </label>
         <input
           type="password"
           id="password"
@@ -49,9 +58,11 @@ const LoginPage: React.FC = () => {
         />
       </div>
 
-          <div className="font-medium dark:text-red-400">{error}</div>
+      {error && <div className="font-medium text-red-400">{error}</div>}
 
-      <button type="submit" className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transform transition duration-300 hover:scale-105 shadow-lg hover:shadow-2xl">Login</button>
+      <button type="submit" className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transform transition duration-300 hover:scale-105 shadow-lg hover:shadow-2xl">
+        Login
+      </button>
     </form>
   );
 }
