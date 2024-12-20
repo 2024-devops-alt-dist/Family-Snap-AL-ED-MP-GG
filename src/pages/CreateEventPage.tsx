@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { createEvent } from "../services/eventService";
-import { eventInterface } from "../entity/eventInterface";
+import { Event } from "../entity/eventInterface";
 import { useNavigate } from "react-router-dom";
-import CameraComponent from "../components/CameraComponent";
 
 const CreateEventPage: React.FC = () => {
     const [title, setTitle] = useState("");
@@ -14,7 +13,7 @@ const CreateEventPage: React.FC = () => {
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
         
-        const newEvent: Omit<eventInterface, "id"> = {
+        const newEvent: Omit<Event, "id"> = {
             title,
             description,
             url,

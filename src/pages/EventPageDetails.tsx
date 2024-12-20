@@ -3,12 +3,12 @@ import { useParams, Link } from "react-router-dom";
 import { getPicturesByEventId } from "../services/pictureService";
 import { getEventById } from "../services/eventService";
 import { pictureInterface } from "../entity/pictureInterface";
-import { eventInterface } from "../entity/eventInterface";
+import { Event } from "../entity/eventInterface";
 
 const EventPageDetails: React.FC = () => {
     const { eventId } = useParams<{ eventId: string }>();
     const [pictures, setPictures] = useState<pictureInterface[]>([]);
-    const [eventDetails, setEventDetails] = useState<eventInterface | null>(null);
+    const [eventDetails, setEventDetails] = useState<Event | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     
     useEffect(() => {

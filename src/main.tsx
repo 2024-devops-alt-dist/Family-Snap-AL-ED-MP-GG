@@ -7,6 +7,8 @@ import "./App.css";
 import App from "./App";
 import EventListPage from "./pages/EventListPage";
 import CreateEventPage from "./pages/CreateEventPage";
+import LoginPage from "./pages/LoginPage";
+import EventPageDetails from "./pages/EventPageDetails";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

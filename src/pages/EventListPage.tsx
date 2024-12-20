@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { getEvents, deleteEvent } from "../services/eventService";
-import { eventInterface } from "../entity/eventInterface";
+import { Event } from "../entity/eventInterface";
 import { Link } from "react-router-dom";
 
 const EventListPage: React.FC = () => {
-    const [events, setEvents] = useState<eventInterface[]>([]);
+    const [events, setEvents] = useState<Event[]>([]);
     
     // Get events
     useEffect(() => {

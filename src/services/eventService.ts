@@ -1,10 +1,10 @@
-import { eventInterface } from "../entity/eventInterface";
+import { Event } from "../entity/eventInterface";
 import { supabase } from "../supabaseConfig";
 import QRCode from 'qrcode';
 
 
 // Get Event
-export async function getEvents(): Promise<eventInterface[]> {
+export async function getEvents(): Promise<Event[]> {
   const { data, error } = await supabase
   .from("event")
   .select("id, created_at, title, url, description, qr_code")
@@ -18,7 +18,7 @@ export async function getEvents(): Promise<eventInterface[]> {
   return data || [];
 }
 
-export async function getEventById(eventId: number): Promise<eventInterface> {
+export async function getEventById(eventId: number): Promise<Event> {
   const { data, error } = await supabase
   .from("event")
   .select("id, created_at, title, url, description, qr_code")
@@ -33,7 +33,7 @@ export async function getEventById(eventId: number): Promise<eventInterface> {
 
 
 // Create Event
-export async function createEvent(event: Omit<eventInterface, "id">): Promise<eventInterface> {
+export async function createEvent(event: Omit<Event, "id">): Promise<Event> {
   try {
     // Ajoute l'événement pour récupérer l'ID
     const { data: createdEvent, error: insertError } = await supabase
@@ -69,7 +69,7 @@ export async function createEvent(event: Omit<eventInterface, "id">): Promise<ev
 }
 
 // Update Event
-export async function updateEvent(eventId: number, updates: Partial<Event>): Promise<eventInterface> {
+export async function updateEvent(eventId: number, updates: Partial<Event>): Promise<Event> {
   const { data, error } = await supabase
   .from("event")
   .update(updates)
