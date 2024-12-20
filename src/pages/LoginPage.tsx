@@ -20,7 +20,7 @@ const LoginPage: React.FC = () => {
       if (user) {
         const token = "123"; // Simule un jeton
         localStorage.setItem('token', token);
-        navigate('/'); 
+        navigate('/events'); 
       } else {
         setError('Identifiants incorrects');
       }
@@ -31,40 +31,63 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8">
+    <form
+      onSubmit={handleSubmit}
+      className="space-y-8 max-w-md mx-auto p-8 rounded-lg shadow-xl bg-gradient-to-br from-red-200 via-white to-red-100 border-4 border-red-500 transform transition-all hover:scale-105 hover:shadow-2xl"
+    >
+      <h2 className="text-4xl font-extrabold text-red-800 text-center animate-pulse">
+        🎄 Connexion 🎁
+      </h2>
+  
       <div className="relative group">
-        <label htmlFor="name" className="absolute left-3 top-2 text-green-800 text-sm transform -translate-y-2 scale-90 transition-all group-focus-within:scale-75 group-focus-within:-translate-y-4">
-          Nom d'utilisateur:
+        <label
+          htmlFor="name"
+          className="absolute left-3 top-2 text-red-800 text-sm transform -translate-y-2 scale-90 transition-all group-focus-within:scale-75 group-focus-within:-translate-y-4"
+        >
+          🎅 Nom d'utilisateur
         </label>
         <input
           type="text"
           id="name"
           value={name}
           onChange={(event) => setName(event.target.value)}
-          className="w-full border border-green-500 rounded-lg p-4 text-green-900 bg-green-50 focus:outline-none focus:ring-4 focus:ring-green-400 focus:border-green-500"
+          className="w-full border border-red-500 rounded-lg p-4 text-red-900 bg-red-50 focus:outline-none focus:ring-4 focus:ring-red-400 focus:border-red-600 placeholder-red-800 transition-all duration-300 focus:shadow-lg"
+          placeholder="Entrez votre nom"
         />
       </div>
-
+  
       <div className="relative group">
-        <label htmlFor="password" className="absolute left-3 top-2 text-green-800 text-sm transform -translate-y-2 scale-90 transition-all group-focus-within:scale-75 group-focus-within:-translate-y-4">
-          Mot de passe:
+        <label
+          htmlFor="password"
+          className="absolute left-3 top-2 text-red-800 text-sm transform -translate-y-2 scale-90 transition-all group-focus-within:scale-75 group-focus-within:-translate-y-4"
+        >
+          🎄 Mot de passe
         </label>
         <input
           type="password"
           id="password"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
-          className="w-full border border-green-500 rounded-lg p-4 text-green-900 bg-green-50 focus:outline-none focus:ring-4 focus:ring-green-400 focus:border-green-500"
+          className="w-full border border-red-500 rounded-lg p-4 text-red-900 bg-red-50 focus:outline-none focus:ring-4 focus:ring-red-400 focus:border-red-600 placeholder-red-800 transition-all duration-300 focus:shadow-lg"
+          placeholder="Entrez votre mot de passe"
         />
       </div>
-
-      {error && <div className="font-medium text-red-400">{error}</div>}
-
-      <button type="submit" className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transform transition duration-300 hover:scale-105 shadow-lg hover:shadow-2xl">
-        Login
+  
+      {error && (
+        <div className="font-medium text-red-600 text-center animate-bounce">
+          {error}
+        </div>
+      )}
+  
+      <button
+        type="submit"
+        className="w-full bg-gradient-to-r from-red-600 to-red-800 text-white px-6 py-3 rounded-lg hover:bg-red-800 transform transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-2xl"
+      >
+        🎁 Se Connecter 🎄
       </button>
     </form>
   );
+  
 }
 
 export default LoginPage;

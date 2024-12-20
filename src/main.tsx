@@ -14,11 +14,17 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
+        {/* Route Principal */}
         <Route path="/" element={<App />}>
-          <Route index element={<EventListPage />} />
-          <Route path="login" element={<LoginPage />} />
+          <Route index element={<LoginPage />} />
+
+        {/* Route de l'application */}
+          <Route path="events" element={<EventListPage />} />
           <Route path="create" element={<CreateEventPage />} />
-          <Route path="/details/:eventId" element={<EventPageDetails />} /> 
+          <Route path="details/:eventId" element={<EventPageDetails />} />
+
+          {/* Route pour les page non trouvée*/}
+          <Route path="*" element={<h1>Page non trouvée</h1>} />
         </Route>
       </Routes>
     </BrowserRouter>
