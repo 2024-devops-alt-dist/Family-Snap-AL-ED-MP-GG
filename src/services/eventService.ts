@@ -46,9 +46,13 @@ export async function createEvent(event: Omit<Event, "id">): Promise<Event> {
       throw new Error(`Erreur lors de la création de l'événement : ${insertError?.message}`);
     }
     
-    // Génére l'URL du QR Code vers la page de détails
-    const eventDetailUrl = `${window.location.origin}/details/${createdEvent.id}`;
+    
+    const baseUrl = process.env.REACT_APP_BASE_URL || window.location.origin;
+    
+    // Générez l'URL du QR code
+    const eventDetailUrl = `${baseUrl}/details/${createdEvent.id}`;
     const qrCodeUrl = await QRCode.toDataURL(eventDetailUrl);
+    
     
     // Met à jour l'événement avec l'URL des détails de l'événement pour le QR Code
     const { data: updatedEvent, error: updateError } = await supabase
