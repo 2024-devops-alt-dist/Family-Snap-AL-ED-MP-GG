@@ -102,7 +102,7 @@ const EventPageDetails: React.FC = () => {
           >
             {!isCamera ? "Prendre une photo" : "Fermer"}
           </button>
-          {isCamera && <CameraComponent />}
+          {isCamera && <CameraComponent eventId={parseInt(eventId ? eventId:"")} />}
 
             <div>
                 <input type="file" onChange={handleFileChange} />
