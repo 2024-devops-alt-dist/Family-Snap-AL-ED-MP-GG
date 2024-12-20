@@ -41,11 +41,11 @@ export async function getPicturesByEventId(
 
 // Créer une photo
 export async function createPicture(
-  fileName: string
+  fileName: string, event_id: number
 ): Promise<pictureInterface> {
   const newEvent: pictureInterface = {
     url: fileName,
-    event_id: 14,
+    event_id: event_id,
     created_at: new Date(),
   };
   const { data, error } = await supabase
