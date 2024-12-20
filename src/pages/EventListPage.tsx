@@ -55,7 +55,6 @@ const EventListPage: React.FC = () => {
         </Link>
         </div>
         
-        {/* Liste des événements */}
         {events.length === 0 ? (
             <p className="text-gray-700 text-xl text-center mt-16">
             Aucun événement trouvé. Créez-en un dès maintenant ! 🎊
@@ -101,17 +100,29 @@ const EventListPage: React.FC = () => {
                     <img
                     src={event.qr_code}
                     alt="QR Code de l'événement"
-                    className="mx-auto mt-2 rounded-lg shadow-md"
+                    className="mx-auto mt-2 w-40 h-35 object-contain rounded-lg shadow-md"
                     />
                     </div>
                 )}
                 
+                
+                <div className="flex justify-between items-center mt-6 gap-x-4">
+                <Link
+                to={`/details/${event.id}`}
+                className="flex-1 min-w-[50px] text-center bg-blue-500 text-white font-bold px-6 py-3 rounded-xl hover:bg-blue-600 transition transform hover:scale-105 shadow-lg"
+                >
+                📋 Détails
+                </Link>
+                
                 <button
                 onClick={() => handleDelete(event.id)}
-                className="w-full mt-6 bg-red-600 text-white font-bold px-6 py-3 rounded-xl hover:bg-red-700 transition transform hover:scale-105 shadow-lg"
+                className="flex-1 min-w-[50px] text-center bg-red-600 text-white font-bold px-6 py-3 rounded-xl hover:bg-red-700 transition transform hover:scale-105 shadow-lg"
                 >
                 🗑️ Supprimer
                 </button>
+                </div>
+                
+                
                 </li>
             ))}
             </ul>
@@ -119,8 +130,6 @@ const EventListPage: React.FC = () => {
         </div>
         </div>
     );
-    
-    
 };
 
 export default EventListPage;
